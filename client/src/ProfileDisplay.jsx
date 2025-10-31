@@ -1,24 +1,21 @@
 import React from "react";
 import { FaArrowLeft, FaUserCircle, FaHome, FaCog } from "react-icons/fa";
+import logo from "./penako remove bg.png";
 
-const ProfileDisplay = ({ profileData, onBackToForm, onDeleteProfile, onNavigateToHome, onNavigateToSettings }) => {
+const ProfileDisplay = ({ profileData, onBackToForm, onDeleteProfile, onNavigate }) => {
   return (
     <div style={styles.container}>
-      {/* Header */}
-      <div style={styles.header}>
+      <div style={styles.logoSection}>
         <FaArrowLeft style={styles.iconBack} onClick={onBackToForm} />
-        <div style={styles.logoContainer}>
-          <img
-            src="/logo-penako.png" // Ganti dengan path logo kamu
-            alt="PENAKO"
-            style={styles.logo}
-          />
-          <p style={styles.subtitle}>PENCATATAN AKUNTANSI KOPERASI</p>
-        </div>
+        <img
+          src={logo}
+          alt="PENAKO"
+          style={styles.logo}
+        />
+        <p style={styles.subtitle}>PENCATATAN AKUNTANSI KOPERASI</p>
       </div>
 
-      {/* Judul */}
-      <h2 style={styles.title}>Profil</h2>
+      <h2 style={styles.pageTitle}>Profil</h2>
 
       {/* Foto Profil */}
       <div style={styles.profileIconContainer}>
@@ -26,27 +23,27 @@ const ProfileDisplay = ({ profileData, onBackToForm, onDeleteProfile, onNavigate
       </div>
 
       {/* Box Data Profil */}
-      <div style={styles.profileBox}>
-        {profileData && profileData.length > 0 ? (
-          <>
-            <p><strong>NAMA ANGGOTA :</strong> {profileData[profileData.length - 1].nama}</p>
-            <p><strong>TEMPAT/TANGGAL LAHIR :</strong> {profileData[profileData.length - 1].ttl}</p>
-            <p><strong>JENIS KELAMIN :</strong> {profileData[profileData.length - 1].jenisKelamin}</p>
-            <p><strong>ALAMAT :</strong> {profileData[profileData.length - 1].alamat}</p>
-            <p><strong>NO. HP :</strong> {profileData[profileData.length - 1].noHp}</p>
+      {profileData && profileData.length > 0 ? (
+        profileData.map((profile, index) => (
+          <div key={index} style={styles.profileBox}>
+            <p><strong>NAMA ANGGOTA :</strong> {profile.nama}</p>
+            <p><strong>TEMPAT/TANGGAL LAHIR :</strong> {profile.ttl}</p>
+            <p><strong>JENIS KELAMIN :</strong> {profile.jenisKelamin}</p>
+            <p><strong>ALAMAT :</strong> {profile.alamat}</p>
+            <p><strong>NO. HP :</strong> {profile.noHp}</p>
             <p style={styles.arrow}>V</p>
-          </>
-        ) : (
-          <>
-            <p><strong>NAMA ANGGOTA :</strong> .........................................</p>
-            <p><strong>TEMPAT/TANGGAL LAHIR :</strong> ...............................</p>
-            <p><strong>JENIS KELAMIN :</strong> ............................................</p>
-            <p><strong>ALAMAT :</strong> ......................................................</p>
-            <p><strong>NO. HP :</strong> .........................................................</p>
-            <p style={styles.arrow}>V</p>
-          </>
-        )}
-      </div>
+          </div>
+        ))
+      ) : (
+        <div style={styles.profileBox}>
+          <p><strong>NAMA ANGGOTA :</strong> .........................................</p>
+          <p><strong>TEMPAT/TANGGAL LAHIR :</strong> ...............................</p>
+          <p><strong>JENIS KELAMIN :</strong> ............................................</p>
+          <p><strong>ALAMAT :</strong> ......................................................</p>
+          <p><strong>NO. HP :</strong> .........................................................</p>
+          <p style={styles.arrow}>V</p>
+        </div>
+      )}
 
       {/* Delete Button outside the card */}
       {profileData && profileData.length > 0 && (
@@ -77,14 +74,14 @@ const ProfileDisplay = ({ profileData, onBackToForm, onDeleteProfile, onNavigate
         </div>
       </div>
 
-      {/* Navbar bawah */}
+      {/* Navbar bawah di dalam body */}
       <div style={styles.footer}>
-        <div style={styles.footerItem} onClick={onNavigateToHome}>
-          <FaHome />
+        <div style={styles.footerItem} onClick={() => onNavigate('home')}>
+          <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Beranda" width="30" />
           <p style={styles.footerText}>BERANDA</p>
         </div>
-        <div style={styles.footerItem} onClick={onNavigateToSettings}>
-          <FaCog />
+        <div style={styles.footerItem} onClick={() => onNavigate('settings')}>
+          <img src="https://cdn-icons-png.flaticon.com/512/2099/2099058.png" alt="Pengaturan" width="30" />
           <p style={styles.footerText}>PENGATURAN</p>
         </div>
       </div>
@@ -94,43 +91,54 @@ const ProfileDisplay = ({ profileData, onBackToForm, onDeleteProfile, onNavigate
 
 const styles = {
   container: {
-    backgroundColor: "#D2E3DC",
+    background: "linear-gradient(to bottom right, #d9ede3, #a8d5b9)",
     minHeight: "100vh",
     width: "100%",
-    fontFamily: "Poppins, sans-serif",
-    textAlign: "center",
-    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "10px 10px 80px 10px",
+    overflow: "hidden",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
-  header: {
+  logoSection: {
+    background: "transparent",
+    textAlign: "center",
     paddingTop: "10px",
     position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconBack: {
     position: "absolute",
     left: "20px",
-    top: "25px",
+    top: "50%",
+    transform: "translateY(-50%)",
     fontSize: "24px",
     color: "#2C6B4F",
     cursor: "pointer",
   },
-  logoContainer: {
-    marginTop: "20px",
-  },
   logo: {
-    width: "140px",
-    height: "auto",
+    width: "180px",
+    marginTop: "15px",
   },
   subtitle: {
-    fontSize: "12px",
+    color: "#2f7b5a",
     fontWeight: "600",
-    color: "#2C6B4F",
-    marginTop: "2px",
+    fontSize: "10px",
+    marginTop: "-50px",
+    marginBottom: "15px",
   },
-  title: {
-    fontSize: "20px",
+  pageTitle: {
+    color: "#19583d",
     fontWeight: "700",
-    color: "#184E36",
-    marginTop: "10px",
+    fontSize: "20px",
+    marginBottom: "30px",
   },
   profileIconContainer: {
     display: "flex",
@@ -149,10 +157,15 @@ const styles = {
     borderRadius: "15px",
     border: "2px solid #4F9D79",
     padding: "10px 20px",
-    margin: "10px 30px",
+    margin: "10px auto",
     textAlign: "left",
     fontSize: "12px",
     color: "#2C2C2C",
+    minHeight: "150px",
+    width: "300px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
   },
   arrow: {
     textAlign: "center",
@@ -172,6 +185,7 @@ const styles = {
     fontWeight: "700",
     fontSize: "12px",
     marginBottom: "10px",
+    color: "#184E36",
   },
   activityItem: {
     display: "flex",
@@ -182,25 +196,31 @@ const styles = {
     marginLeft: "10px",
     fontSize: "12px",
     fontWeight: "600",
+    color: "#184E36",
   },
   footer: {
-    position: "absolute",
-    bottom: "0",
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0,
     width: "100%",
-    backgroundColor: "#D2E3DC",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
     display: "flex",
     justifyContent: "space-around",
     padding: "10px 0",
+    zIndex: 1000,
   },
   footerItem: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    cursor: "pointer",
   },
   footerText: {
     fontSize: "10px",
     fontWeight: "600",
     marginTop: "2px",
+    color: "#184d47",
   },
   deleteButtonContainer: {
     display: "flex",

@@ -7,6 +7,7 @@ import ProfileDisplay from './ProfileDisplay'
 import DataKeuangan from './DataKeuangan'
 import Inventaris from './Inventaris'
 import Pengaturan from './Pengaturan'
+import InfoAplikasi from './InfoAplikasi'
 import './App.css'
 
 function App() {
@@ -97,7 +98,6 @@ function App() {
 
   return (
     <div className="app">
-
       <main>
         {activeTab === 'home' && (
           <Home onNavigate={setActiveTab} />
@@ -108,36 +108,38 @@ function App() {
             <ProfilAnggota
               onSaveProfile={handleSaveProfile}
               onNavigateToDisplay={handleNavigateToDisplay}
+              onNavigate={setActiveTab}
             />
           ) : (
             <ProfileDisplay
               profileData={profilData}
               onBackToForm={handleBackToForm}
               onDeleteProfile={() => setProfilData([])}
-              onNavigateToHome={() => setActiveTab('home')}
-              onNavigateToSettings={() => setActiveTab('settings')}
+              onNavigate={setActiveTab}
             />
           )
         )}
 
         {activeTab === 'keuangan' && (
           <DataKeuangan
-            onNavigateToHome={() => setActiveTab('home')}
-            onNavigateToSettings={() => setActiveTab('settings')}
+            onNavigate={setActiveTab}
           />
         )}
 
         {activeTab === 'inventaris' && (
-          <Inventaris
-            onNavigateToHome={() => setActiveTab('home')}
-            onNavigateToSettings={() => setActiveTab('settings')}
-          />
+          <Inventaris onNavigate={setActiveTab} />
         )}
 
         {activeTab === 'settings' && (
-          <Pengaturan />
+          <Pengaturan onNavigate={setActiveTab} />
+        )}
+
+        {activeTab === 'info' && (
+          <InfoAplikasi onNavigate={setActiveTab} />
         )}
       </main>
+
+
     </div>
   )
 }

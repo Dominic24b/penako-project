@@ -23,21 +23,23 @@
 }
 
 .login-logo img {
-  width: 180px;
-  margin-bottom: 10px;
+  width: 140px;
+  margin-bottom: 5px;
 }
 
 .login-logo p {
   color: #246b4b;
   font-weight: 600;
-  margin-top: 4px;
+  font-size: 8px;
+  margin-top: -50px;
 }
 
 .login-container h2 {
   color: #2d6753;
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 .login-container > p {

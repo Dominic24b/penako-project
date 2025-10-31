@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './Login.css'
+import logo from './penako remove bg.png'
 
 function Login({ onLogin, onShowRegister }) {
   const [namaKoperasi, setNamaKoperasi] = useState('')
@@ -23,7 +24,7 @@ function Login({ onLogin, onShowRegister }) {
     <div className="login-page">
       <div className="login-container">
         <div className="login-logo">
-          <img src="penako remove bg.png" alt="PENAKO Logo" />
+          <img src={logo} alt="PENAKO Logo" />
           <p>PENCATATAN AKUNTANSI KOPERASI</p>
         </div>
         <h2>SELAMAT DATANG</h2>

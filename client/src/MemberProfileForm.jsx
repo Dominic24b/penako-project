@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import logo from "./penako remove bg.png";
 
-export default function ProfilAnggota({ onSaveProfile, onNavigateToDisplay }) {
+export default function MemberProfileForm({ onSaveProfile, onNavigateToDisplay, onNavigate }) {
   const [formData, setFormData] = useState({
     nama: '',
     ttl: '',
@@ -32,179 +33,188 @@ export default function ProfilAnggota({ onSaveProfile, onNavigateToDisplay }) {
     }
   };
   const containerStyle = {
-    fontFamily: "Poppins, sans-serif",
-    backgroundColor: "#cfe0d2",
-    minHeight: "100vh",
-    color: "#184d47",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  };
-
-  const headerStyle = {
-    textAlign: "center",
-    marginTop: "20px",
-  };
-
-  const logoStyle = {
-    height: "60px",
-  };
-
-  const titleStyle = {
-    fontSize: "1.3em",
-    marginTop: "5px",
-    color: "#2b6752",
-  };
-
-  const formContainer = {
-    marginTop: "20px",
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
-    gap: "20px",
-    width: "80%",
-    maxWidth: "400px",
+    gap: "16px",
+    width: "90%",
+    maxWidth: "380px",
+    margin: "auto",
+  };
+
+  const fieldContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
   };
 
   const labelStyle = {
-    backgroundColor: "#7db69d",
-    color: "white",
-    fontWeight: "600",
-    padding: "6px 8px",
-    borderRadius: "6px",
-    fontSize: "0.9em",
-    textAlign: "center",
+    fontWeight: "bold",
+    marginBottom: "6px",
+    fontSize: "14px",
+    color: "#184d47",
   };
 
   const inputStyle = {
     width: "100%",
-    padding: "6px",
-    borderRadius: "6px",
-    border: "none",
-    outline: "none",
-  };
-
-  const buttonContainer = {
-    gridColumn: "1 / span 2",
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "10px",
+    height: "45px",
+    borderRadius: "8px",
+    border: "1px solid #888",
+    paddingLeft: "10px",
+    backgroundColor: "#3f3f3f",
+    color: "#fff",
   };
 
   const buttonStyle = {
-    backgroundColor: "#184d47",
+    gridColumn: "2 / span 1",
+    marginTop: "10px",
+    backgroundColor: "#0B6059",
     color: "white",
     fontWeight: "bold",
+    padding: "8px 20px",
+    borderRadius: "25px",
     border: "none",
-    borderRadius: "20px",
-    padding: "8px 40px",
     cursor: "pointer",
   };
 
-  const bottomNav = {
-    position: "fixed",
-    bottom: "0",
-    width: "100%",
-    background: "transparent",
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    padding: "10px 0",
-  };
-
-  const navItem = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    color: "#184d47",
-    fontSize: "0.8em",
-    fontWeight: "600",
-    textDecoration: "none",
-  };
-
   return (
-    <div style={containerStyle}>
-      {/* Header */}
-      <div style={headerStyle}>
-        <img src="penako_logo.png" alt="Logo PENAKO" style={logoStyle} />
-        <h1 style={titleStyle}>PENCATATAN AKUNTANSI KOPERASI</h1>
+    <div
+      style={{
+        backgroundColor: "#cfe0d2",
+        height: "100vh",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        paddingTop: "40px",
+        margin: "0 auto",
+        overflow: "hidden",
+        overflowY: "auto",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: "20px", position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <img src={logo} alt="Logo PENAKO" style={{ width: "140px", marginBottom: "10px" }} />
+        <p style={{ fontSize: "10px", fontWeight: "600", color: "#2C6B4F", marginTop: "2px" }}>
+          PENCATATAN AKUNTANSI KOPERASI
+        </p>
       </div>
+      <h3 style={{ marginTop: "20px", color: "#184d47" }}>Isi Profil Anggota</h3>
 
-      <h2 style={{ marginTop: "20px" }}>Isi Profil Anggota</h2>
-
-      {/* Form Profil */}
-      <form onSubmit={handleSubmit} style={formContainer}>
-        <div>
-          <div style={labelStyle}>Nama Anggota</div>
+      <form onSubmit={handleSubmit}>
+        <div style={containerStyle}>
+        <div style={fieldContainerStyle}>
+          <label style={labelStyle}>Nama Anggota</label>
           <input
             type="text"
             name="nama"
             value={formData.nama}
             onChange={handleInputChange}
             style={inputStyle}
+            placeholder="Masukkan nama"
             required
           />
         </div>
-        <div>
-          <div style={labelStyle}>No. HP</div>
+
+        <div style={fieldContainerStyle}>
+          <label style={labelStyle}>No. HP</label>
           <input
             type="text"
             name="noHp"
             value={formData.noHp}
             onChange={handleInputChange}
             style={inputStyle}
+            placeholder="Masukkan no HP"
             required
           />
         </div>
 
-        <div>
-          <div style={labelStyle}>TTl</div>
+        <div style={fieldContainerStyle}>
+          <label style={labelStyle}>TTI</label>
           <input
             type="text"
             name="ttl"
             value={formData.ttl}
             onChange={handleInputChange}
             style={inputStyle}
+            placeholder="Tempat Tanggal Lahir"
             required
           />
         </div>
-        <div>
-          <div style={labelStyle}>Alamat</div>
+
+        <div style={fieldContainerStyle}>
+          <label style={labelStyle}>Alamat</label>
           <input
             type="text"
             name="alamat"
             value={formData.alamat}
             onChange={handleInputChange}
             style={inputStyle}
+            placeholder="Masukkan alamat"
             required
           />
         </div>
 
-        <div>
-          <div style={labelStyle}>Jenis Kelamin</div>
-          <input
-            type="text"
+        <div style={fieldContainerStyle}>
+          <label style={labelStyle}>Jenis Kelamin</label>
+          <select
             name="jenisKelamin"
             value={formData.jenisKelamin}
             onChange={handleInputChange}
             style={inputStyle}
             required
-          />
+          >
+            <option value="">Pilih</option>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
         </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <button type="submit" style={buttonStyle}>SIMPAN</button>
+
+        <button type="submit" style={buttonStyle}>SIMPAN</button>
         </div>
       </form>
 
       {/* Bottom Navigation */}
-      <div style={bottomNav}>
-        <a href="/beranda" style={navItem}>
-          <img src="icon_beranda.png" alt="Beranda" width="30" />
-          <span>BERANDA</span>
-        </a>
-        <a href="/pengaturan" style={navItem}>
-          <img src="icon_pengaturan.png" alt="Pengaturan" width="30" />
-          <span>PENGATURAN</span>
-        </a>
+      <div style={{
+        position: "fixed",
+        bottom: "0",
+        width: "100vw",
+        background: "transparent",
+        display: "flex",
+        justifyContent: "space-around",
+        alignItems: "center",
+        padding: "10px 0",
+        zIndex: 1000,
+      }}>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          color: "#184d47",
+          fontSize: "0.8em",
+          fontWeight: "600",
+          textDecoration: "none",
+          cursor: "pointer",
+        }} onClick={() => onNavigate('home')}>
+          <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Beranda" width="30" />
+          <p style={{ fontSize: "10px", fontWeight: "600", marginTop: "2px", color: "#184d47" }}>BERANDA</p>
+        </div>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          color: "#184d47",
+          fontSize: "0.8em",
+          fontWeight: "600",
+          textDecoration: "none",
+          cursor: "pointer",
+        }} onClick={() => onNavigate('settings')}>
+          <img src="https://cdn-icons-png.flaticon.com/512/2099/2099058.png" alt="Pengaturan" width="30" />
+          <p style={{ fontSize: "10px", fontWeight: "600", marginTop: "2px", color: "#184d47" }}>PENGATURAN</p>
+        </div>
       </div>
     </div>
   );

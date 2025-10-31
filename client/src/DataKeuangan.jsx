@@ -1,241 +1,293 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaHome, FaCog } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
+import logo from "./penako remove bg.png";
 
-const DataKeuangan = ({ onNavigateToHome, onNavigateToSettings }) => {
+const DataKeuangan = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
-    namaAnggota: '',
-    tanggalAkhirSetoran: '',
-    besarPinjaman: '',
-    bunga: '',
-    tanggalPengambilan: ''
+    namaAnggota: "",
+    besarPinjaman: "",
+    bunga: "",
+    tanggalPengambilan: "",
+    tanggalAkhirSetoran: "",
   });
 
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState([
+    {
+      id: 1,
+      namaAnggota: "IDHAM",
+      besarPinjaman: "Rp10,000,000.00",
+      bunga: "5%",
+      total: "Rp500,000.00",
+      tanggalPengambilan: "10/10/2025",
+      tanggalAkhirSetoran: "11/11/2025",
+      keterangan: "Lunas",
+    },
+    {
+      id: 2,
+      namaAnggota: "SIVA",
+      besarPinjaman: "Rp50,000,000.00",
+      bunga: "10%",
+      total: "Rp5,000,000.00",
+      tanggalPengambilan: "10/10/2025",
+      tanggalAkhirSetoran: "12/31/2025",
+      keterangan: "Belum Lunas",
+    },
+    {
+      id: 3,
+      namaAnggota: "CEI",
+      besarPinjaman: "Rp1,000,000.00",
+      bunga: "10%",
+      total: "Rp100,000.00",
+      tanggalPengambilan: "10/1/2025",
+      tanggalAkhirSetoran: "10/1/2026",
+      keterangan: "Lunas",
+    },
+  ]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSave = () => {
     if (formData.namaAnggota && formData.besarPinjaman && formData.bunga) {
-      const total = parseFloat(formData.besarPinjaman) + (parseFloat(formData.besarPinjaman) * parseFloat(formData.bunga) / 100);
+      const total =
+        parseFloat(formData.besarPinjaman) *
+        (parseFloat(formData.bunga) / 100);
 
       const newEntry = {
         id: Date.now(),
         namaAnggota: formData.namaAnggota,
-        besarPinjaman: formData.besarPinjaman,
+        besarPinjaman: `Rp${parseFloat(formData.besarPinjaman).toLocaleString()}`,
+        bunga: `${formData.bunga}%`,
+        total: `Rp${total.toLocaleString()}`,
         tanggalPengambilan: formData.tanggalPengambilan,
         tanggalAkhirSetoran: formData.tanggalAkhirSetoran,
-        bunga: formData.bunga,
-        total: total.toFixed(2)
+        keterangan: "Belum Lunas",
       };
 
-      setTableData(prev => [...prev, newEntry]);
-
-      // Reset form
+      setTableData((prev) => [...prev, newEntry]);
       setFormData({
-        namaAnggota: '',
-        tanggalAkhirSetoran: '',
-        besarPinjaman: '',
-        bunga: '',
-        tanggalPengambilan: ''
+        namaAnggota: "",
+        besarPinjaman: "",
+        bunga: "",
+        tanggalPengambilan: "",
+        tanggalAkhirSetoran: "",
       });
     }
   };
 
   return (
     <div style={styles.container}>
-      {/* Header */}
-      <div style={styles.header}>
-        <FaArrowLeft style={styles.iconBack} />
-        <div style={styles.logoContainer}>
-          <img
-            src="/logo-penako.png" // ganti dengan path logo kamu
-            alt="PENAKO"
-            style={styles.logo}
-          />
-          <p style={styles.subtitle}>PENCATATAN AKUNTANSI KOPERASI</p>
-        </div>
+      <div style={styles.logoSection}>
+        <FaArrowLeft style={styles.iconBack} onClick={() => onNavigate('home')} />
+        <img
+          src={logo}
+          alt="PENAKO Logo"
+          style={styles.logo}
+        />
+        <p style={styles.subtitle}>PENCATATAN AKUNTANSI KOPERASI</p>
       </div>
 
-      {/* Judul */}
-      <h2 style={styles.title}>Data Keuangan</h2>
+      <h2 style={styles.pageTitle}>Data Keuangan</h2>
 
-      {/* Form */}
-      <div style={styles.formContainer}>
-        <div style={styles.row}>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Nama Anggota</label>
-            <input
-              type="text"
-              style={styles.input}
-              name="namaAnggota"
-              value={formData.namaAnggota}
-              onChange={handleInputChange}
-            />
+        {/* Input kiri kanan */}
+        <div style={styles.inputWrapper}>
+          {/* Kiri */}
+          <div style={styles.leftColumn}>
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Nama Anggota</label>
+              <input
+                type="text"
+                style={styles.input}
+                name="namaAnggota"
+                value={formData.namaAnggota}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Besar Pinjaman (Rp)</label>
+              <input
+                type="number"
+                style={styles.input}
+                name="besarPinjaman"
+                value={formData.besarPinjaman}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Tanggal Pengambilan</label>
+              <input
+                type="date"
+                style={styles.input}
+                name="tanggalPengambilan"
+                value={formData.tanggalPengambilan}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Tanggal Akhir Setoran</label>
-            <input
-              type="date"
-              style={styles.input}
-              name="tanggalAkhirSetoran"
-              value={formData.tanggalAkhirSetoran}
-              onChange={handleInputChange}
-            />
+
+          {/* Kanan */}
+          <div style={styles.rightColumn}>
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Bunga (%)</label>
+              <input
+                type="number"
+                style={styles.input}
+                name="bunga"
+                value={formData.bunga}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div style={styles.fieldGroup}>
+              <label style={styles.label}>Tanggal Akhir Setoran</label>
+              <input
+                type="date"
+                style={styles.input}
+                name="tanggalAkhirSetoran"
+                value={formData.tanggalAkhirSetoran}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <button style={styles.button} onClick={handleSave}>
+              SIMPAN
+            </button>
           </div>
         </div>
 
-        <div style={styles.row}>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Besar Pinjaman</label>
-            <input
-              type="number"
-              style={styles.input}
-              name="besarPinjaman"
-              value={formData.besarPinjaman}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Bunga</label>
-            <input
-              type="number"
-              style={styles.input}
-              name="bunga"
-              value={formData.bunga}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        <div style={styles.row}>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>Tanggal Pengambilan</label>
-            <input
-              type="date"
-              style={styles.input}
-              name="tanggalPengambilan"
-              value={formData.tanggalPengambilan}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div style={styles.buttonGroup}>
-            <button style={styles.button} onClick={handleSave}>SIMPAN</button>
-          </div>
-        </div>
-      </div>
-
-      {/* Tabel Data */}
-      <div style={styles.tableContainer}>
-        <table style={styles.table}>
-          <thead>
-            <tr>
-              <th>Nama Anggota</th>
-              <th>Besar Pinjaman</th>
-              <th>Tanggal Pengambilan</th>
-              <th>Tanggal Akhir Setoran</th>
-              <th>Bunga</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.length === 0 ? (
+        {/* Tabel */}
+        <div style={styles.tableContainer}>
+          <table style={styles.table}>
+            <thead>
               <tr>
-                <td colSpan="6" style={{ textAlign: "center", color: "#2C6B4F" }}>
-                  Tidak ada data
-                </td>
+                <th>NO</th>
+                <th>NAMA ANGGOTA</th>
+                <th>BESAR PINJAMAN</th>
+                <th>BUNGA</th>
+                <th>TOTAL</th>
+                <th>TGL PENGAMBILAN</th>
+                <th>TGL AKHIR SETORAN</th>
+                <th>KETERANGAN</th>
               </tr>
-            ) : (
-              tableData.map((item) => (
+            </thead>
+            <tbody>
+              {tableData.map((item, index) => (
                 <tr key={item.id}>
+                  <td>{index + 1}</td>
                   <td>{item.namaAnggota}</td>
                   <td>{item.besarPinjaman}</td>
+                  <td>{item.bunga}</td>
+                  <td>{item.total}</td>
                   <td>{item.tanggalPengambilan}</td>
                   <td>{item.tanggalAkhirSetoran}</td>
-                  <td>{item.bunga}%</td>
-                  <td>{item.total}</td>
+                  <td>{item.keterangan}</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      {/* Footer */}
-      <div style={styles.footer}>
-        <div style={styles.footerItem} onClick={onNavigateToHome}>
-          <FaHome />
+      {/* Navbar bawah fixed */}
+      <div style={{ ...styles.footer, position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }}>
+        <div style={styles.footerItem} onClick={() => onNavigate('home')}>
+          <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Beranda" width="30" />
           <p style={styles.footerText}>BERANDA</p>
         </div>
-        <div style={styles.footerItem} onClick={onNavigateToSettings}>
-          <FaCog />
+        <div style={styles.footerItem} onClick={() => onNavigate('settings')}>
+          <img src="https://cdn-icons-png.flaticon.com/512/2099/2099058.png" alt="Pengaturan" width="30" />
           <p style={styles.footerText}>PENGATURAN</p>
         </div>
       </div>
     </div>
   );
-};
+}
 
+// 🎨 STYLE
 const styles = {
   container: {
-    backgroundColor: "#D2E3DC",
+    background: "linear-gradient(to bottom right, #d9ede3, #a8d5b9)",
     minHeight: "100vh",
     width: "100%",
-    fontFamily: "Poppins, sans-serif",
-    position: "relative",
-    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "10px 10px 80px 10px",
+    overflow: "auto",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
-  header: {
+  logoSection: {
+    background: "transparent",
+    textAlign: "center",
     paddingTop: "10px",
     position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconBack: {
     position: "absolute",
     left: "20px",
-    top: "25px",
+    top: "50%",
+    transform: "translateY(-50%)",
     fontSize: "24px",
     color: "#2C6B4F",
     cursor: "pointer",
   },
-  logoContainer: {
-    marginTop: "20px",
-  },
   logo: {
-    width: "140px",
-    height: "auto",
+    width: "180px",
+    marginTop: "15px",
+    marginBottom: "0",
   },
   subtitle: {
-    fontSize: "12px",
+    color: "#2f7b5a",
     fontWeight: "600",
-    color: "#2C6B4F",
-    marginTop: "2px",
+    fontSize: "10px",
+    marginTop: "0",
+    marginBottom: "15px",
   },
-  title: {
-    fontSize: "20px",
+  pageTitle: {
+    color: "#19583d",
     fontWeight: "700",
-    color: "#184E36",
-    marginTop: "10px",
+    fontSize: "20px",
+    marginBottom: "30px",
   },
-  formContainer: {
-    margin: "10px 20px",
-    textAlign: "center",
-  },
-  row: {
+  inputWrapper: {
     display: "flex",
     justifyContent: "center",
-    gap: "10px",
+    gap: "20px",
     flexWrap: "wrap",
-    marginBottom: "10px",
+    marginBottom: "20px",
+  },
+  leftColumn: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    flex: 1,
+    maxWidth: "200px",
+  },
+  rightColumn: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    flex: 1,
+    maxWidth: "200px",
   },
   fieldGroup: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   label: {
     backgroundColor: "#7DB69F",
@@ -245,60 +297,66 @@ const styles = {
     borderRadius: "3px",
     padding: "3px 8px",
     marginBottom: "3px",
-  },
-  input: {
-    border: "none",
-    borderRadius: "3px",
-    width: "130px",
-    height: "20px",
+    width: "140px",
     textAlign: "center",
   },
+  input: {
+    width: "140px",
+    height: "28px",
+    borderRadius: "6px",
+    border: "1px solid #888",
+    paddingLeft: "8px",
+    backgroundColor: "#3f3f3f",
+    color: "#fff",
+    fontSize: "12px",
+  },
   button: {
-    backgroundColor: "#2C6B4F",
+    width: "140px",
+    height: "32px",
+    backgroundColor: "#0B6059",
     color: "white",
+    fontWeight: "bold",
+    borderRadius: "6px",
     border: "none",
-    borderRadius: "20px",
-    fontWeight: "700",
-    padding: "8px 20px",
-    marginTop: "5px",
-    cursor: "pointer",
+    marginTop: "15px",
+    fontSize: "12px",
   },
   tableContainer: {
-    margin: "15px 15px 80px 15px",
-    overflowX: "auto",
+    overflow: "auto",
+    backgroundColor: "#9BCBB2",
+    borderRadius: "8px",
+    padding: "10px",
+    maxHeight: "400px",
   },
   table: {
     width: "100%",
     borderCollapse: "collapse",
-    backgroundColor: "#9BCBB2",
-    borderRadius: "10px",
     fontSize: "11px",
+    color: "#184d47",
   },
   footer: {
-    position: "absolute",
-    bottom: "0",
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0,
     width: "100%",
-    backgroundColor: "#D2E3DC",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
     display: "flex",
     justifyContent: "space-around",
     padding: "10px 0",
+    zIndex: 1000,
   },
   footerItem: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    cursor: "pointer",
   },
   footerText: {
     fontSize: "10px",
     fontWeight: "600",
     marginTop: "2px",
-  },
-  buttonGroup: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "20px",
+    color: "#184d47",
   },
 };
 
